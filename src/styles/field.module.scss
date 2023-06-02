@@ -1,0 +1,21 @@
+@import './global-vars.scss';
+
+.field {
+  box-sizing: content-box;
+  height: 320px;
+  width: 320px;
+  border: solid $fieldBorderColor 3px;
+  border-bottom-width: 2.2px;
+  border-right-width: 2.2px;
+  background-color: white;
+  box-shadow: 0px 0px 4px rgb(26, 25, 25);
+}
+
+.inActive {
+  opacity: 0.3;
+  box-shadow: none;
+}
+
+.row {
+  display: flex;
+}

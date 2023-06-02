@@ -15,7 +15,7 @@ export class SeaBattle {
   update: Function
   constructor(update: Function) {
     this.update = update
-    this.api = new Api(update);
+    this.api = new Api(this);
     this.alliesField = new Field(10, 10);
     this.enemiesField = new Field(10, 10);
     this.enemiesFieldOnClick = this.enemiesFieldOnClick.bind(this);

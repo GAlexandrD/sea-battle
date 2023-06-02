@@ -1,0 +1,47 @@
+@import './global-vars.scss';
+
+.cell{
+  border-bottom: 1px $fieldCellColor solid;
+  border-right: 1px $fieldCellColor solid;
+  height: 32px;
+  width: 32px;
+}
+
+.destroyed {
+  background-color: red;
+  border: none;
+}
+
+.ship {
+  background-color: black;
+  border: none;
+}
+
+.unrevealed {
+
+}
+
+.damaged {
+  background-color: orange;
+  border: none;
+}
+
+.checked{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choosen {
+  background-color: rgb(104, 161, 17);
+  border: none;
+}
+
+.checked::after {
+  content: '';
+  display: block;
+  border-radius: 50%;
+  height: 5px;
+  width: 5px;
+  background-color: rgb(54, 69, 189);
+}
