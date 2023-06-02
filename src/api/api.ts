@@ -23,7 +23,6 @@ class Api {
   ws: WebSocket = new WebSocket('ws://localhost:4000');
   game: SeaBattle;
   userId: number = 0;
-  sessionId: number = 0;
   messages: any = {
     shoot: (data: any) => {
       this.shootAllies(data);
@@ -37,7 +36,7 @@ class Api {
     },
     'session-closed': () => {
       this.game.reloadFields();
-      this.sessionId = 0;
+      this.game.sessionId = 0;
       this.game.update()
     },
   };
@@ -46,6 +45,7 @@ class Api {
     this.ws.onmessage = (m: MessageEvent) => this.onMessage(m);
     this.makeSession = this.makeSession.bind(this);
     this.connectToSession = this.connectToSession.bind(this);
+    this.shoot = this.shoot.bind(this);
   }
 
   onMessage(mesEvent: MessageEvent) {
@@ -60,7 +60,8 @@ class Api {
       playerId: this.userId,
     });
     if (!response.data.sessionId) return;
-    this.sessionId = response.data.sessionId;
+    this.game.sessionId = response.data.sessionId;
+    this.game.update()
   }
 
   async connectToSession(sessionId: number, field: IField) {
@@ -69,9 +70,10 @@ class Api {
       { field, playerId: this.userId, sessionId }
     );
     if (!response.data.sessionId) return;
-    this.sessionId = response.data.sessionId;
+    this.game.sessionId = response.data.sessionId;
     this.game.movingSide = !this.game.movingSide;
     this.game.isStarted = true;
+    this.game.update()
   }
 
   connectMessage(message: IConnectMes) {

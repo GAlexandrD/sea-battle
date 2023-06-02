@@ -5,17 +5,18 @@ import { Field } from './Field';
 import { Ship } from './Ship';
 
 export class SeaBattle {
-  api: Api;
+  shoot: Function
   userId: number = 0;
   alliesField: Field;
   enemiesField: Field;
   isStarted: boolean = false;
   movingSide: boolean = true;
+  sessionId: number = 0
   winner: null | 'allies' | 'enemies' = null;
   update: Function
-  constructor(update: Function) {
+  constructor(update: Function, shoot: Function) {
     this.update = update
-    this.api = new Api(this);
+    this.shoot = shoot
     this.alliesField = new Field(10, 10);
     this.enemiesField = new Field(10, 10);
     this.enemiesFieldOnClick = this.enemiesFieldOnClick.bind(this);
@@ -34,7 +35,7 @@ export class SeaBattle {
     }
     if (!cell) return;
     if (cell.variant !== 'unrevealed') return;
-    this.api.shoot(x, y);
+    this.shoot(x, y);
   }
 
   enemiesFieldOnShoot(

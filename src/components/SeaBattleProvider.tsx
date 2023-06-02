@@ -47,8 +47,8 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
 
   const update = (game: SeaBattle) => () => {
     setMovingSide(game.movingSide);
-    setSession(game.api.sessionId);
     setIsStarted(game.isStarted);
+    setSession(game.sessionId)
     setWinner(game.winner);
     setEnemiesCells(game.enemiesField.cells);
     setAlliesCells(game.alliesField.cells);
@@ -56,7 +56,7 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
 
   const game = useMemo(() => {
     const game = new SeaBattle(
-      () => {}
+      update, () => {}
     );
     game.update = update(game)
     game.update()
@@ -79,11 +79,16 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
     return game;
   }, [value]);
 
+  const api = useMemo(() => {
+    const api = new Api(game)
+    game.shoot = api.shoot
+    return api
+  },  [value])
   return (
     <GameContext.Provider
       value={{
         game,
-        api: game.api,
+        api: api,
         movingSide,
         winner,
         enemiesCells,
