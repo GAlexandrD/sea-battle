@@ -39,7 +39,7 @@ class Api {
     'session-closed': () => {
       if(!this.game) return
       this.game.reloadFields();
-      this.game.sessionId = 0;
+      this.game.sessionId = '';
       this.game.update()
     },
   };
@@ -77,7 +77,7 @@ class Api {
     this.game.update()
   }
 
-  async connectToSession(sessionId: number, field: IField) {
+  async connectToSession(sessionId: string, field: IField) {
     const response = await axios.post(
       'http://localhost:5000/connect-to-session',
       { field, playerId: this.userId, sessionId }

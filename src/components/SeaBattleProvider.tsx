@@ -16,7 +16,7 @@ interface ISeaBattleContext {
   movingSide: boolean;
   alliesCells: ICell[][];
   enemiesCells: ICell[][];
-  session: number;
+  session: string;
   restart: Function;
 }
 
@@ -28,7 +28,7 @@ export const useGame = () => useContext(GameContext);
 
 const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   const [movingSide, setMovingSide] = useState<boolean>(true);
-  const [session, setSession] = useState<number>(0);
+  const [session, setSession] = useState<string>('');
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [winner, setWinner] = useState<null | 'allies' | 'enemies'>(null);
   const [enemiesCells, setEnemiesCells] = useState<ICell[][]>([]);

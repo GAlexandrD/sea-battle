@@ -17,14 +17,14 @@ const SessionControl: FC = () => {
   };
 
   const onConnectToSession = () => {
-    if (!+sessionId) return;
+    if (!sessionId) return;
     const field: IField = {
       ships: game.alliesField.ships,
       width: game.alliesField.width,
       height: game.alliesField.height,
       cells: [],
     };
-    api.connectToSession(+sessionId, field);
+    api.connectToSession(sessionId, field);
     setSessionId('');
   };
   return (
@@ -55,8 +55,7 @@ const SessionControl: FC = () => {
                 value={sessionId}
                 className={classes.session_input}
                 onInput={(e: any) => {
-                  if (Number.isInteger(+e.target.value))
-                    setSessionId(e.target.value);
+                  setSessionId(e.target.value);
                 }}
                 placeholder="input session id"
               />

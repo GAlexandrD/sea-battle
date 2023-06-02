@@ -12,7 +12,7 @@ export class SeaBattle {
   enemiesField: Field;
   isStarted: boolean = false;
   movingSide: boolean = true;
-  sessionId: number = 0;
+  sessionId: string = '';
   winner: null | 'allies' | 'enemies' = null;
   update: Function = () => {};
   constructor(update?: Function, api?: Api) {
@@ -136,7 +136,7 @@ export class SeaBattle {
     this.movingSide = true;
     this.isStarted = false;
     this.winner = null
-    this.sessionId = 0
+    this.sessionId = ''
     this.update();
   }
 }
