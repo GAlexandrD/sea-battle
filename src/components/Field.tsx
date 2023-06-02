@@ -14,7 +14,7 @@ interface FieldProps {
 const FieldComponent: FC<FieldProps> = ({ cells, onClick, movingSide }) => {
   const fieldRef = useRef() as MutableRefObject<HTMLDivElement>;
   useEffect(() => {
-    if(movingSide === undefined) return
+    if (movingSide === undefined) return;
     if (movingSide) {
       fieldRef.current.classList.add(classes.inActive);
     } else {

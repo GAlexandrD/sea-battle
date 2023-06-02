@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  ReactNode,
-  useContext,
-  useState,
-  useMemo,
-} from 'react';
+import React, { FC, ReactNode, useContext, useState, useMemo } from 'react';
 import Api from '../api/api';
 import { SeaBattle } from '../logic/Game';
 import { Ship } from '../logic/Ship';
@@ -48,18 +42,16 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   const update = (game: SeaBattle) => () => {
     setMovingSide(game.movingSide);
     setIsStarted(game.isStarted);
-    setSession(game.sessionId)
+    setSession(game.sessionId);
     setWinner(game.winner);
     setEnemiesCells(game.enemiesField.cells);
     setAlliesCells(game.alliesField.cells);
-  }
+  };
 
   const game = useMemo(() => {
-    const game = new SeaBattle(
-      update, () => {}
-    );
-    game.update = update(game)
-    game.update()
+    const game = new SeaBattle(update, () => {});
+    game.update = update(game);
+    game.update();
     const ships = [
       Ship.createShip(1, 1, 4, 'horizontal'),
       Ship.createShip(1, 3, 3, 'horizontal'),
@@ -80,10 +72,10 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   }, [value]);
 
   const api = useMemo(() => {
-    const api = new Api(game)
-    game.shoot = api.shoot
-    return api
-  },  [value])
+    const api = new Api(game);
+    game.shoot = api.shoot;
+    return api;
+  }, [value]);
   return (
     <GameContext.Provider
       value={{

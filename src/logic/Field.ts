@@ -79,8 +79,8 @@ export class Field implements IField {
       this.setShipCells(oldDecks, ship.isDestroyed());
       return;
     }
-    ship.x = x
-    ship.y = y
+    ship.x = x;
+    ship.y = y;
     this.removeShipCells(oldDecks);
     this.setShipCells(ship.decks, ship.isDestroyed());
   }

@@ -5,7 +5,7 @@ import './styles/App.scss';
 function App() {
   return (
     <div className={'container'}>
-      <SeaBattleContainer/>
+      <SeaBattleContainer />
     </div>
   );
 }

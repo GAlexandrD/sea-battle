@@ -1,5 +1,5 @@
-import { IShip } from "./IShip";
-import { ICell } from "./ICell";
+import { IShip } from './IShip';
+import { ICell } from './ICell';
 
 export interface IField {
   width: number;

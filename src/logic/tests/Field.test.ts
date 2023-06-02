@@ -1,8 +1,6 @@
 import { Ship } from '../Ship';
 import { Field } from '../Field';
 
-
-
 test('Field test', () => {
   const field = new Field(10, 10);
   expect(field.cells.length).toBe(10);
@@ -27,15 +25,15 @@ test('Field test', () => {
   expect(ship1.y).toBe(3);
 
   // allowed move move
-  field.turnShip(ship1)
-  expect(ship1.decks[3].y).toBe(3)
-  expect(ship1.decks[3].x).toBe(8)
+  field.turnShip(ship1);
+  expect(ship1.decks[3].y).toBe(3);
+  expect(ship1.decks[3].x).toBe(8);
 
   // forbidden move
-  field.turnShip(ship2)
-  expect(ship2.decks[3].x).toBe(3)
-  expect(ship2.decks[3].y).toBe(6)
+  field.turnShip(ship2);
+  expect(ship2.decks[3].x).toBe(3);
+  expect(ship2.decks[3].y).toBe(6);
 
-  const ship = field.findShip(3, 3)
-  expect(ship).toBe(ship2)
+  const ship = field.findShip(3, 3);
+  expect(ship).toBe(ship2);
 });

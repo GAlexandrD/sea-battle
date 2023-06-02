@@ -3,7 +3,6 @@ import classes from '../styles/SessionControl.module.scss';
 import { useGame } from './SeaBattleProvider';
 import { IField } from '../types/IField';
 
-
 const SessionControl: FC = () => {
   const [sessionId, setSessionId] = useState<string>('');
   const { api, session, game, isStarted, winner, restart } = useGame();
@@ -12,7 +11,7 @@ const SessionControl: FC = () => {
       ships: game.alliesField.ships,
       width: game.alliesField.width,
       height: game.alliesField.height,
-      cells: []
+      cells: [],
     };
     api.makeSession(field);
   };
@@ -23,7 +22,7 @@ const SessionControl: FC = () => {
       ships: game.alliesField.ships,
       width: game.alliesField.width,
       height: game.alliesField.height,
-      cells: []
+      cells: [],
     };
     api.connectToSession(+sessionId, field);
     setSessionId('');

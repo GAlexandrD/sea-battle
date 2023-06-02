@@ -1,22 +1,21 @@
-import Api from '../api/api';
 import { ICell } from '../types/ICell';
 import { IShip } from '../types/IShip';
 import { Field } from './Field';
 import { Ship } from './Ship';
 
 export class SeaBattle {
-  shoot: Function
+  shoot: Function;
   userId: number = 0;
   alliesField: Field;
   enemiesField: Field;
   isStarted: boolean = false;
   movingSide: boolean = true;
-  sessionId: number = 0
+  sessionId: number = 0;
   winner: null | 'allies' | 'enemies' = null;
-  update: Function
+  update: Function;
   constructor(update: Function, shoot: Function) {
-    this.update = update
-    this.shoot = shoot
+    this.update = update;
+    this.shoot = shoot;
     this.alliesField = new Field(10, 10);
     this.enemiesField = new Field(10, 10);
     this.enemiesFieldOnClick = this.enemiesFieldOnClick.bind(this);
@@ -24,7 +23,6 @@ export class SeaBattle {
     this.alliesFieldOnClick = this.alliesFieldOnClick.bind(this);
   }
 
- 
   enemiesFieldOnClick(x: number, y: number) {
     if (!this.movingSide) return;
     let cell: ICell | null = null;
@@ -59,7 +57,7 @@ export class SeaBattle {
         this.winner = 'allies';
       }
     }
-    this.update()
+    this.update();
   }
 
   alliesFieldOnShoot(x: number, y: number) {
@@ -68,7 +66,7 @@ export class SeaBattle {
     if (!ship) {
       this.alliesField.setCellState(x, y, 'checked');
       this.movingSide = !this.movingSide;
-      this.update()
+      this.update();
       return;
     }
     ship.damage(x, y);
@@ -82,7 +80,7 @@ export class SeaBattle {
         this.winner = 'enemies';
       }
     }
-    this.update()
+    this.update();
   }
 
   alliesFieldOnClick(x: number, y: number) {
@@ -96,25 +94,25 @@ export class SeaBattle {
         this.alliesField.moveShip(x, y, choosenShip);
         this.alliesField.choosenShip = null;
       }
-      this.update()
+      this.update();
       return;
     }
     if (!ship) return;
     this.alliesField.choosenShip = ship;
     this.alliesField.setChoosenShipCells(ship);
-    this.update()
+    this.update();
   }
 
   reloadFields() {
     this.enemiesField.ships = [];
-    for(const row of this.enemiesField.cells) {
-      for(const cell of row) {
-        this.enemiesField.setCellState(cell.x, cell.y, 'unrevealed')
+    for (const row of this.enemiesField.cells) {
+      for (const cell of row) {
+        this.enemiesField.setCellState(cell.x, cell.y, 'unrevealed');
       }
     }
-    for(const row of this.alliesField.cells) {
-      for(const cell of row) {
-        this.alliesField.setCellState(cell.x, cell.y, 'unrevealed')
+    for (const row of this.alliesField.cells) {
+      for (const cell of row) {
+        this.alliesField.setCellState(cell.x, cell.y, 'unrevealed');
       }
     }
     for (const ship of this.alliesField.ships) {
@@ -125,6 +123,6 @@ export class SeaBattle {
     }
     this.movingSide = true;
     this.isStarted = false;
-    this.update()
+    this.update();
   }
 }
