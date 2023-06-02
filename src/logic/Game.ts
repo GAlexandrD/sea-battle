@@ -1,10 +1,12 @@
+import Api from '../api/api';
 import { ICell } from '../types/ICell';
 import { IShip } from '../types/IShip';
 import { Field } from './Field';
 import { Ship } from './Ship';
 
 export class SeaBattle {
-  shoot: Function;
+  static created: SeaBattle | null;
+  api: Api | null = null;
   userId: number = 0;
   alliesField: Field;
   enemiesField: Field;
@@ -12,15 +14,25 @@ export class SeaBattle {
   movingSide: boolean = true;
   sessionId: number = 0;
   winner: null | 'allies' | 'enemies' = null;
-  update: Function;
-  constructor(update: Function, shoot: Function) {
-    this.update = update;
-    this.shoot = shoot;
+  update: Function = () => {};
+  constructor(update?: Function, api?: Api) {
+    if(update) this.update = update;
+    if (api) this.api = api;
     this.alliesField = new Field(10, 10);
     this.enemiesField = new Field(10, 10);
     this.enemiesFieldOnClick = this.enemiesFieldOnClick.bind(this);
     this.alliesFieldOnShoot = this.alliesFieldOnShoot.bind(this);
     this.alliesFieldOnClick = this.alliesFieldOnClick.bind(this);
+  }
+
+  static createGame(update?: Function, api?: Api): SeaBattle {
+    if (this.created) {
+      if (update) this.created.update = update;
+      if (api) this.created.api = api;
+      return this.created;
+    }
+    this.created = new SeaBattle(update, api);
+    return this.created
   }
 
   enemiesFieldOnClick(x: number, y: number) {
@@ -33,7 +45,7 @@ export class SeaBattle {
     }
     if (!cell) return;
     if (cell.variant !== 'unrevealed') return;
-    this.shoot(x, y);
+    if (this.api) this.api.shoot(x, y);
   }
 
   enemiesFieldOnShoot(
@@ -123,6 +135,8 @@ export class SeaBattle {
     }
     this.movingSide = true;
     this.isStarted = false;
+    this.winner = null
+    this.sessionId = 0
     this.update();
   }
 }

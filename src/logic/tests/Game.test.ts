@@ -2,10 +2,7 @@ import { Ship } from '../Ship';
 import { SeaBattle } from '../Game';
 
 test('Field test', () => {
-  const game = new SeaBattle(
-    () => {},
-    () => {}
-  );
+  const game = new SeaBattle();
   game.movingSide = true;
   const ship = Ship.createShip(1, 1, 2, 'horizontal');
   game.alliesField.addShip(1, 1, ship);

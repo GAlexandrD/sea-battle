@@ -36,7 +36,7 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   const [value, setValue] = useState<boolean>(false);
 
   const restart = () => {
-    setValue(!value);
+    game.reloadFields()
   };
 
   const update = (game: SeaBattle) => () => {
@@ -49,9 +49,7 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   };
 
   const game = useMemo(() => {
-    const game = new SeaBattle(update, () => {});
-    game.update = update(game);
-    game.update();
+    const game = SeaBattle.createGame()
     const ships = [
       Ship.createShip(1, 1, 4, 'horizontal'),
       Ship.createShip(1, 3, 3, 'horizontal'),
@@ -67,15 +65,17 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
     for (const ship of ships) {
       game.alliesField.addShip(ship.x, ship.y, ship);
     }
-    console.log(game.alliesField);
+    game.update = update(game);
+    game.update();
     return game;
   }, [value]);
 
+
   const api = useMemo(() => {
-    const api = new Api(game);
-    game.shoot = api.shoot;
-    return api;
-  }, [value]);
+    const api = Api.createApi(game)
+    game.api = api
+    return api
+  }, [value])
   return (
     <GameContext.Provider
       value={{

@@ -20,8 +20,9 @@ interface IShotMes {
 }
 
 class Api {
+  static created: Api | null = null
   ws: WebSocket = new WebSocket('ws://localhost:4000');
-  game: SeaBattle;
+  game: SeaBattle | null = null;
   userId: number = 0;
   messages: any = {
     shoot: (data: any) => {
@@ -31,21 +32,32 @@ class Api {
       this.connectMessage(data);
     },
     'player-connected': () => {
+      if (!this.game) return
       this.game.isStarted = true;
       this.game.update()
     },
     'session-closed': () => {
+      if(!this.game) return
       this.game.reloadFields();
       this.game.sessionId = 0;
       this.game.update()
     },
   };
-  constructor(game: SeaBattle) {
-    this.game = game;
+  constructor(game?: SeaBattle) {
+    if(game) this.game = game;
     this.ws.onmessage = (m: MessageEvent) => this.onMessage(m);
     this.makeSession = this.makeSession.bind(this);
     this.connectToSession = this.connectToSession.bind(this);
     this.shoot = this.shoot.bind(this);
+  }
+
+  static createApi(game?: SeaBattle) {
+    if(Api.created) {
+      if(game) Api.created.game = game
+      return Api.created
+    }
+    Api.created = new Api(game)
+    return Api.created
   }
 
   onMessage(mesEvent: MessageEvent) {
@@ -60,6 +72,7 @@ class Api {
       playerId: this.userId,
     });
     if (!response.data.sessionId) return;
+    if(!this.game) return
     this.game.sessionId = response.data.sessionId;
     this.game.update()
   }
@@ -70,6 +83,7 @@ class Api {
       { field, playerId: this.userId, sessionId }
     );
     if (!response.data.sessionId) return;
+    if(!this.game) return
     this.game.sessionId = response.data.sessionId;
     this.game.movingSide = !this.game.movingSide;
     this.game.isStarted = true;
@@ -86,6 +100,7 @@ class Api {
       x,
       y,
     });
+    if (!this.game) return
     this.game.enemiesFieldOnShoot(
       x,
       y,
@@ -96,6 +111,7 @@ class Api {
   }
 
   shootAllies(message: IShotMes) {
+    if(!this.game) return
     this.game.alliesFieldOnShoot(message.x, message.y);
   }
 }
