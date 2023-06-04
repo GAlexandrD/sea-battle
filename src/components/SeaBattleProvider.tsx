@@ -1,7 +1,6 @@
 import React, { FC, ReactNode, useContext, useState, useMemo } from 'react';
 import Api from '../api/api';
 import { SeaBattle } from '../logic/Game';
-import { Ship } from '../logic/Ship';
 import { ICell } from '../types/ICell';
 import { Field } from '../logic/Field';
 
