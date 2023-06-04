@@ -22,6 +22,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: docker build -t client -f Dockerfile.client .
+      - run: docker-compose build
       - run: npm install
       - run: npm test

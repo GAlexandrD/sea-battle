@@ -1,0 +1,44 @@
+version: '2.1'
+
+networks:
+  sea-battle:
+
+services:
+  database:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.db
+    networks:
+      - sea-battle
+    ports:
+      - "5555:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.server
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - sea-battle
+    ports:
+      - "4000:4000"
+      - "5000:5000"
+
+  client: 
+    build: 
+      context: .
+      dockerfile: Dockerfile.client
+    depends_on:
+      - server
+    networks:
+      - sea-battle
+    ports:
+      - "3000:3000"
+  

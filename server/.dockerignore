@@ -6,3 +6,4 @@ Dockerfile.*
 
 .vscode
 node_modules
+dist
