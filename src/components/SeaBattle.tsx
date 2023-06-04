@@ -3,9 +3,18 @@ import FieldComponent from '../components/Field';
 import classes from '../styles/SeaBattle.module.scss';
 import { useGame } from './SeaBattleProvider';
 import SessionControl from './SessionControl';
+import { Field } from '../logic/Field';
 
 const SeaBattleComponent: FC = () => {
   const { game, movingSide, alliesCells, enemiesCells, isStarted } = useGame();
+  const regenerateField = () => {
+    game.alliesField.ships = [];
+    const ships = Field.generateShips();
+    for (const ship of ships) {
+      game.alliesField.addShip(ship.x, ship.y, ship);
+      game.reloadFields();
+    }
+  };
   return (
     <>
       <div className={classes.title}>Sea Battle</div>
@@ -38,6 +47,7 @@ const SeaBattleComponent: FC = () => {
             cells={alliesCells}
             onClick={game.alliesFieldOnClick}
           ></FieldComponent>
+          <img src="./reload.png" alt="" onClick={() => regenerateField()} className={classes.reload_btn} />
         </>
       )}
     </>

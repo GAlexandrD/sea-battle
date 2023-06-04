@@ -16,7 +16,7 @@ export class SeaBattle {
   winner: null | 'allies' | 'enemies' = null;
   update: Function = () => {};
   constructor(update?: Function, api?: Api) {
-    if(update) this.update = update;
+    if (update) this.update = update;
     if (api) this.api = api;
     this.alliesField = new Field(10, 10);
     this.enemiesField = new Field(10, 10);
@@ -32,7 +32,7 @@ export class SeaBattle {
       return this.created;
     }
     this.created = new SeaBattle(update, api);
-    return this.created
+    return this.created;
   }
 
   enemiesFieldOnClick(x: number, y: number) {
@@ -115,6 +115,15 @@ export class SeaBattle {
     this.update();
   }
 
+  reloadGame() {
+    this.reloadFields();
+    this.movingSide = true;
+    this.isStarted = false;
+    this.winner = null;
+    this.sessionId = '';
+    this.update();
+  }
+
   reloadFields() {
     this.enemiesField.ships = [];
     for (const row of this.enemiesField.cells) {
@@ -133,10 +142,6 @@ export class SeaBattle {
       }
       this.alliesField.setShipCells(ship.decks, false);
     }
-    this.movingSide = true;
-    this.isStarted = false;
-    this.winner = null
-    this.sessionId = ''
-    this.update();
+    this.update()
   }
 }

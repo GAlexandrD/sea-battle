@@ -1,6 +1,6 @@
 import { ICell, variant } from '../types/ICell';
 import { IField } from '../types/IField';
-import { IDeck } from '../types/IShip';
+import { IDeck, IShip } from '../types/IShip';
 import { FieldValidator } from './FieldValidator';
 import { Ship } from './Ship';
 
@@ -16,6 +16,51 @@ export class Field implements IField {
     this.width = width;
     const cells = this.createField(width, height);
     this.cells = cells;
+  }
+
+  static generateShips(): Ship[] {
+    const ships: Ship[] = []
+    let isValid = false; 
+    while (!isValid) {
+      const ship = this.genShip(4)
+      isValid = FieldValidator.validateShipPos(10, 10, ship.decks, ships)
+      if(isValid) ships.push(ship)
+    }
+    isValid = false
+    for (let i = 0; i < 2; i++) {
+      while (!isValid) {
+        const ship = this.genShip(3)
+        isValid = FieldValidator.validateShipPos(10, 10, ship.decks, ships)
+        if(isValid) ships.push(ship)
+      }
+      isValid = false
+    }
+    for (let i = 0; i < 3; i++) {
+      while (!isValid) {
+        const ship = this.genShip(2)
+        isValid = FieldValidator.validateShipPos(10, 10, ship.decks, ships)
+        if(isValid) ships.push(ship)
+      }
+      isValid = false
+    }
+    for (let i = 0; i < 4; i++) {
+      while (!isValid) {
+        const ship = this.genShip(1)
+        isValid = FieldValidator.validateShipPos(10, 10, ship.decks, ships)
+        if(isValid) ships.push(ship)
+      }
+      isValid = false
+    }
+    return ships
+  }
+
+  private static genShip(length: number): Ship {
+    const x = Math.floor(Math.random() * 10 + 1)
+    const y = Math.floor(Math.random() * 10 + 1)
+    const or = Math.floor(Math.random() * 2 + 1)
+    let orientation = or === 1 ? 'horizontal' : 'vertical'
+    const randShip = Ship.createShip(x, y, length, orientation)
+    return randShip
   }
 
   createField(width: number, height: number): ICell[][] {

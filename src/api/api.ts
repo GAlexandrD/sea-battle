@@ -14,7 +14,7 @@ interface IShotMes {
   side: 'allies' | 'enemies';
   x: number;
   y: number;
-  destroyed?: IShip;
+  isDestroyed: IShip | null;
   isShip: boolean;
   isWin?: boolean;
 }
@@ -34,11 +34,11 @@ class Api {
     'player-connected': () => {
       if (!this.game) return
       this.game.isStarted = true;
-      this.game.update()
+      this.game.reloadFields()
     },
     'session-closed': () => {
       if(!this.game) return
-      this.game.reloadFields();
+      this.game.reloadGame();
       this.game.sessionId = '';
       this.game.update()
     },
@@ -74,7 +74,7 @@ class Api {
     if (!response.data.sessionId) return;
     if(!this.game) return
     this.game.sessionId = response.data.sessionId;
-    this.game.update()
+    this.game.reloadFields()
   }
 
   async connectToSession(sessionId: string, field: IField) {
@@ -87,7 +87,7 @@ class Api {
     this.game.sessionId = response.data.sessionId;
     this.game.movingSide = !this.game.movingSide;
     this.game.isStarted = true;
-    this.game.update()
+    this.game.reloadFields()
   }
 
   connectMessage(message: IConnectMes) {
@@ -105,7 +105,7 @@ class Api {
       x,
       y,
       data.isShip,
-      data.destroyed,
+      data.isDestroyed,
       data.isOver
     );
   }

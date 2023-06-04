@@ -3,6 +3,7 @@ import Api from '../api/api';
 import { SeaBattle } from '../logic/Game';
 import { Ship } from '../logic/Ship';
 import { ICell } from '../types/ICell';
+import { Field } from '../logic/Field';
 
 interface SeaBattleProviderProps {
   children: ReactNode;
@@ -36,7 +37,7 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   const [value, setValue] = useState<boolean>(false);
 
   const restart = () => {
-    game.reloadFields()
+    game.reloadGame();
   };
 
   const update = (game: SeaBattle) => () => {
@@ -49,33 +50,25 @@ const EditorProvider: FC<SeaBattleProviderProps> = ({ children }) => {
   };
 
   const game = useMemo(() => {
-    const game = SeaBattle.createGame()
-    const ships = [
-      Ship.createShip(1, 1, 4, 'horizontal'),
-      Ship.createShip(1, 3, 3, 'horizontal'),
-      Ship.createShip(1, 5, 3, 'horizontal'),
-      Ship.createShip(1, 7, 2, 'horizontal'),
-      Ship.createShip(4, 7, 2, 'horizontal'),
-      Ship.createShip(1, 9, 2, 'horizontal'),
-      Ship.createShip(10, 10, 1, 'horizontal'),
-      Ship.createShip(10, 8, 1, 'horizontal'),
-      Ship.createShip(10, 6, 1, 'horizontal'),
-      Ship.createShip(10, 4, 1, 'horizontal'),
-    ];
-    for (const ship of ships) {
-      game.alliesField.addShip(ship.x, ship.y, ship);
+    const game = SeaBattle.createGame();
+    if (!game.alliesField.ships.length) {
+      const ships = Field.generateShips();
+      console.log(ships);
+      for (const ship of ships) {
+        game.alliesField.addShip(ship.x, ship.y, ship);
+      }
     }
     game.update = update(game);
     game.update();
     return game;
   }, [value]);
 
-
   const api = useMemo(() => {
-    const api = Api.createApi(game)
-    game.api = api
-    return api
-  }, [value])
+    const api = Api.createApi(game);
+    game.api = api;
+    return api;
+  }, [value]);
+
   return (
     <GameContext.Provider
       value={{
