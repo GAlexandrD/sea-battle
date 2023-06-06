@@ -2,11 +2,11 @@
   "include": ["./src"],
   "exclude": ["./dist", "src/**/*.test.ts"],
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "removeComments": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",

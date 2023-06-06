@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import express, { Express, Request, Response } from 'express';
 import { startWSS } from './ws-server';
 import { sequelize } from './db';
 import router from './router/router';
 import { assosiate } from './models/assosiate';
 import cors from 'cors';
-dotenv.config();
+config();
 
 assosiate();
 
