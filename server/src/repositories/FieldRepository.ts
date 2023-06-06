@@ -1,5 +1,5 @@
-import { IFieldService } from 'src/types/interfaces/IFieldService';
-import { shootRes } from '../logic/Game';
+import { IFieldRepository } from '../types/interfaces/repositories/IFieldRepository';
+import { shootRes } from '../services/GameRules';
 import DeckModel from '../models/Deck';
 import FieldModel from '../models/Field';
 import PlayerModel from '../models/Player';
@@ -7,7 +7,7 @@ import ShipModel from '../models/Ship';
 import { IField } from '../types/IField';
 import { IDeck, IShip } from '../types/IShip';
 
-export class FieldService implements IFieldService {
+export class FieldRepository implements IFieldRepository {
   async addField(playerId: number, field: IField) {
     const { width, height, ships } = field;
     const player = await PlayerModel.findOne({ where: { id: playerId } });

@@ -1,19 +1,20 @@
-import { shootRes } from '../logic/Game';
-import { IGameService } from 'src/types/interfaces/IGameService';
-import { IFieldService } from 'src/types/interfaces/IFieldService';
-import { IGame } from 'src/types/interfaces/IGame';
-import { ISessionService } from 'src/types/interfaces/ISessionService';
-import { ISession } from 'src/types/ISession';
+import { shootRes } from './GameRules';
+import { IGameService } from '../types/interfaces/services/IGameService';
+import { IGame } from '../types/interfaces/services/IGame';
+import { ISession } from '../types/ISession';
+import { IFieldRepository } from '../types/interfaces/repositories/IFieldRepository';
+import { ISessionRepository } from '../types/interfaces/repositories/ISessionRepository';
 
 export class GameService implements IGameService {
   constructor(
-    private field: IFieldService,
+    private field: IFieldRepository,
     private game: IGame,
-    private session: ISessionService
-  ){} 
+    private session: ISessionRepository
+  ) {}
 
   async shoot(playerId: number, x: number, y: number): Promise<shootRes> {
-    const session = await this.session.validateSession(playerId);
+    const session = await this.session.getSession(playerId);
+    if (!session) throw new Error('Session didn`t found');
     if (!session.player1 || !session.player2) {
       throw new Error('not enough players');
     }
@@ -29,8 +30,8 @@ export class GameService implements IGameService {
   }
 
   async endGame(session: ISession): Promise<void> {
-    await this.field.removeField(session.player1)
-    await this.field.removeField(session.player2)
-    await this.session.deleteSession(session.player1)
+    await this.field.removeField(session.player1);
+    await this.field.removeField(session.player2);
+    await this.session.deleteSession(session.player1);
   }
 }

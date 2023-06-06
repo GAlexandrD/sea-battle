@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { clients } from '../ws-server';
-import { sessionService } from './../singleton';
+import { sessionService } from '../singleton';
 
 class SessionController {
   async connectToSession(req: Request, res: Response) {

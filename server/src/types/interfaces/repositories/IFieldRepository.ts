@@ -1,8 +1,8 @@
-import { shootRes } from 'src/logic/Game';
-import { IField } from '../IField';
-import { IShip } from '../IShip';
+import { shootRes } from "src/services/GameRules";
+import { IField } from "src/types/IField";
+import { IShip } from "src/types/IShip";
 
-export interface IFieldService {
+export interface IFieldRepository {
   addField(playerId: number, field: IField): Promise<void>;
   addShip(ship: IShip, fieldId: number): Promise<void>;
   getField(playerId: number): Promise<IField>;

@@ -1,35 +1,26 @@
-import { Op } from 'sequelize';
-import SessionModel from '../models/Session';
 import { IField } from '../types/IField';
-import { ISession } from 'src/types/ISession';
-import { IFieldService } from 'src/types/interfaces/IFieldService';
+import { ISession } from '../types/ISession';
+import { IFieldRepository } from '../types/interfaces/repositories/IFieldRepository';
+import { ISessionRepository } from '../types/interfaces/repositories/ISessionRepository';
+import { ISessionService } from '../types/interfaces/services/ISessionService';
 
-export class SessionService {
+export class SessionService implements ISessionService {
   constructor(
-    private field: IFieldService
+    private field: IFieldRepository,
+    private session: ISessionRepository
   ) {}
   async makeSession(playerId: number, field: IField): Promise<ISession> {
     await this.field.addField(playerId, field);
-    const newSession = await SessionModel.create({
-      id: Math.random().toString(16).slice(2),
-      player1: playerId,
-      movingSide: true,
-    });
-    return {
-      id: newSession.id,
-      player1: newSession.player1,
-      player2: newSession.player2,
-    };
+    const session = await this.session.createSession(playerId);
+    return session;
   }
 
   async connectToSession(
     playerId: number,
-    sessionId: number,
+    sessionId: string,
     field: IField
   ): Promise<ISession> {
-    const session = await SessionModel.findOne({ where: { id: sessionId } });
-    if (!session) throw new Error('session didn`t found');
-    await session.update({ player2: playerId });
+    const session = await this.session.connectToSession(playerId, sessionId);
     await this.field.addField(playerId, field);
     return {
       player1: session.player1,
@@ -39,52 +30,16 @@ export class SessionService {
   }
 
   async deleteSession(playerId: number): Promise<ISession> {
-    const session = await SessionModel.findOne({
-      where: {
-        [Op.or]: [{ player1: playerId }, { player2: playerId }],
-      },
-    });
-    if (session) {
-      session.destroy();
-      return {
-        id: session.id,
-        player1: session.player1,
-        player2: session.player2,
-      };
-    }
+    return await this.session.deleteSession(playerId);
   }
 
   async findSession(playerId: number): Promise<ISession> {
-    const session = await SessionModel.findOne({
-      where: {
-        [Op.or]: [{ player1: playerId }, { player2: playerId }],
-      },
-    });
-    return {
-      id: session.id,
-      player1: session.player1,
-      player2: session.player2,
-    };
-  }
-
-  async validateSession(playerId: number): Promise<ISession> {
-    const session = await SessionModel.findOne({
-      where: {
-        [Op.or]: [{ player1: playerId }, { player2: playerId }],
-      },
-    });
-    if (!session) throw new Error('no such session');
-    if (!session.player1 || !session.player2)
-      throw new Error('not enough players');
-    return {
-      id: session.id,
-      player1: session.player1,
-      player2: session.player2,
-    };
+    return this.session.getSession(playerId);
   }
 
   async getAnotherPlayer(playerId: number): Promise<number> {
-    const session = await this.validateSession(playerId);
+    const session = await this.session.getSession(playerId);
+    if (!session) throw new Error('Session wasn`t found');
     let player2 = session.player1;
     if (player2 === playerId) player2 = session.player2;
     return player2;
