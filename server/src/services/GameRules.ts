@@ -1,4 +1,4 @@
-import { IGameRules } from 'src/types/interfaces/services/IGameRules';
+import { IGameRules } from '../types/interfaces/services/IGameRules';
 import { IField } from '../types/IField';
 import { IShip } from '../types/IShip';
 

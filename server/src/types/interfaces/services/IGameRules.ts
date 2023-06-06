@@ -1,4 +1,4 @@
-import { shootRes } from "src/services/GameRules";
+import { shootRes } from "../../../services/GameRules";
 import { IField } from "../../IField";
 
 export interface IGameRules {
