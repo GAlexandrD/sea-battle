@@ -1,4 +1,4 @@
-import { IGame } from 'src/types/interfaces/services/IGame';
+import { IGameRules } from 'src/types/interfaces/services/IGameRules';
 import { IField } from '../types/IField';
 import { IShip } from '../types/IShip';
 
@@ -10,7 +10,7 @@ export interface shootRes {
   isOver: boolean;
 }
 
-export class GameRules implements IGame {
+export class GameRules implements IGameRules {
   shoot(x: number, y: number, field: IField): shootRes {
     const resp: shootRes = {
       x,

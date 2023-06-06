@@ -1,6 +1,6 @@
 import { shootRes } from './GameRules';
 import { IGameService } from '../types/interfaces/services/IGameService';
-import { IGame } from '../types/interfaces/services/IGame';
+import { IGameRules } from '../types/interfaces/services/IGameRules';
 import { ISession } from '../types/ISession';
 import { IFieldRepository } from '../types/interfaces/repositories/IFieldRepository';
 import { ISessionRepository } from '../types/interfaces/repositories/ISessionRepository';
@@ -8,7 +8,7 @@ import { ISessionRepository } from '../types/interfaces/repositories/ISessionRep
 export class GameService implements IGameService {
   constructor(
     private field: IFieldRepository,
-    private game: IGame,
+    private game: IGameRules,
     private session: ISessionRepository
   ) {}
 
