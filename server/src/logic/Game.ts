@@ -1,3 +1,4 @@
+import { IGame } from 'src/types/interfaces/IGame';
 import { IField } from '../types/IField';
 import { IShip } from '../types/IShip';
 
@@ -9,7 +10,7 @@ export interface shootRes {
   isOver: boolean;
 }
 
-class Game {
+export class Game implements IGame {
   shoot(x: number, y: number, field: IField): shootRes {
     const resp: shootRes = {
       x,
@@ -30,7 +31,7 @@ class Game {
     return resp
   }
 
-  isShip(x: number, y: number, field: IField): IShip | null {
+  private isShip(x: number, y: number, field: IField): IShip | null {
     for (const ship of field.ships) {
       for (const deck of ship.decks) {
         if (x === deck.x && y === deck.y) {
@@ -42,14 +43,14 @@ class Game {
     return null;
   }
 
-  isDestroyed(x: number, y: number, ship: IShip): boolean {
+  private isDestroyed(x: number, y: number, ship: IShip): boolean {
     for (const deck of ship.decks) {
       if (!deck.isDamaged && (x !== deck.x || y !== deck.y)) return false;
     }
     return true;
   }
 
-  isOver(ship: IShip, field: IField): boolean {
+  private isOver(ship: IShip, field: IField): boolean {
     for (const sh of field.ships) {
       if(sh === ship) continue
       for (const deck of sh.decks) {

@@ -1,37 +1,36 @@
-import FieldModel from '../models/Field';
-import { sessionService } from './SessionService';
-import { fieldService } from './FieldService';
-import { game, shootRes } from '../logic/Game';
-import SessionModel from '../models/Session';
+import { shootRes } from '../logic/Game';
+import { IGameService } from 'src/types/interfaces/IGameService';
+import { IFieldService } from 'src/types/interfaces/IFieldService';
+import { IGame } from 'src/types/interfaces/IGame';
+import { ISessionService } from 'src/types/interfaces/ISessionService';
+import { ISession } from 'src/types/ISession';
 
-class GameService {
+export class GameService implements IGameService {
+  constructor(
+    private field: IFieldService,
+    private game: IGame,
+    private session: ISessionService
+  ){} 
+
   async shoot(playerId: number, x: number, y: number): Promise<shootRes> {
-    const session = await sessionService.validateSession(playerId);
+    const session = await this.session.validateSession(playerId);
     if (!session.player1 || !session.player2) {
       throw new Error('not enough players');
     }
     let player2 = session.player2;
     if (playerId === player2) player2 = session.player1;
-    const field = await fieldService.getField(player2);
-    const resp: shootRes = game.shoot(x, y, field);
+    const field = await this.field.getField(player2);
+    const resp = this.game.shoot(x, y, field);
     if (resp.isShip) {
-      fieldService.updateField(x, y, player2, resp);
+      this.field.updateField(x, y, player2, resp);
     }
     if (resp.isOver) this.endGame(session);
     return resp;
   }
 
-  async endGame(session: SessionModel) {
-    const field1 = await FieldModel.findOne({
-      where: { playerId: session.player1 },
-    });
-    const field2 = await FieldModel.findOne({
-      where: { playerId: session.player2 },
-    });
-    await field1?.destroy();
-    await field2?.destroy();
-    await session.destroy();
+  async endGame(session: ISession): Promise<void> {
+    await this.field.removeField(session.player1)
+    await this.field.removeField(session.player2)
+    await this.session.deleteSession(session.player1)
   }
 }
-
-export const gameService = new GameService();

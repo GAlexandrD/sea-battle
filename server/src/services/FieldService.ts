@@ -1,3 +1,4 @@
+import { IFieldService } from 'src/types/interfaces/IFieldService';
 import { shootRes } from '../logic/Game';
 import DeckModel from '../models/Deck';
 import FieldModel from '../models/Field';
@@ -6,7 +7,7 @@ import ShipModel from '../models/Ship';
 import { IField } from '../types/IField';
 import { IDeck, IShip } from '../types/IShip';
 
-class FieldService {
+export class FieldService implements IFieldService {
   async addField(playerId: number, field: IField) {
     const { width, height, ships } = field;
     const player = await PlayerModel.findOne({ where: { id: playerId } });
@@ -19,7 +20,7 @@ class FieldService {
     }
   }
 
-  async addShip(ship: IShip, fieldId: number) {
+  async addShip(ship: IShip, fieldId: number): Promise<void> {
     const { x, y, decks } = ship;
     let isDestroyed = true;
     for (const deck of decks) {
@@ -35,9 +36,6 @@ class FieldService {
       const { x, y, isDamaged } = deck;
       await DeckModel.create({ x, y, isDamaged, shipId: newShip.id });
     }
-    return await newShip.reload({
-      include: [{ model: DeckModel, as: 'decks' }],
-    });
   }
 
   async getField(playerId: number): Promise<IField> {
@@ -57,7 +55,7 @@ class FieldService {
     return field;
   }
 
-  async getFieldModel(playerId: number): Promise<FieldModel> {
+  private async getFieldModel(playerId: number): Promise<FieldModel> {
     const fieldModel = await FieldModel.findOne({
       where: { playerId: playerId },
       include: [
@@ -82,6 +80,8 @@ class FieldService {
       }
     }
   }
-}
 
-export const fieldService = new FieldService();
+  async removeField(playerId: number): Promise<void> {
+    await FieldModel.destroy({ where: { playerId } });
+  }
+}
