@@ -1,8 +1,8 @@
-import FieldModel from '../models/Field.js';
-import { sessionService } from './SessionService.js';
-import { fieldService } from './FieldService.js';
-import { game, shootRes } from '../logic/Game.js';
-import SessionModel from '../models/Session.js';
+import FieldModel from '../models/Field';
+import { sessionService } from './SessionService';
+import { fieldService } from './FieldService';
+import { game, shootRes } from '../logic/Game';
+import SessionModel from '../models/Session';
 
 class GameService {
   async shoot(playerId: number, x: number, y: number): Promise<shootRes> {

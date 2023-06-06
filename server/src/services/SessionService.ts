@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
-import SessionModel from '../models/Session.js';
-import { IField } from '../types/IField.js';
-import { fieldService } from './FieldService.js';
+import SessionModel from '../models/Session';
+import { IField } from '../types/IField';
+import { fieldService } from './FieldService';
 
 class SessionService {
   async makeSession(playerId: number, field: IField) {

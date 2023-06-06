@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { sessionService } from '../services/SessionService.js';
-import { clients } from '../ws-server.js';
+import { sessionService } from '../services/SessionService';
+import { clients } from '../ws-server';
 
 class SessionController {
   async connectToSession(req: Request, res: Response) {

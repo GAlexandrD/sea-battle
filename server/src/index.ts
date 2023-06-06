@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response } from 'express';
-import { startWSS } from './ws-server.js';
-import { sequelize } from './db.js';
-import router from './router/router.js';
-import { assosiate } from './models/assosiate.js';
+import { startWSS } from './ws-server';
+import { sequelize } from './db';
+import router from './router/router';
+import { assosiate } from './models/assosiate';
 import cors from 'cors';
 dotenv.config();
 

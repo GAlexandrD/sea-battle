@@ -1,5 +1,5 @@
-import { IField } from '../types/IField.js';
-import { IShip } from '../types/IShip.js';
+import { IField } from '../types/IField';
+import { IShip } from '../types/IShip';
 
 export interface shootRes {
   x: number;

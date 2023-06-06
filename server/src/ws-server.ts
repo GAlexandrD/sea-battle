@@ -1,6 +1,6 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import PlayerModel from './models/Player.js';
-import { sessionService } from './services/SessionService.js';
+import PlayerModel from './models/Player';
+import { sessionService } from './services/SessionService';
 import dotenv from 'dotenv';
 dotenv.config()
 

@@ -1,4 +1,4 @@
-import { IShip } from "./IShip.js";
+import { IShip } from "./IShip";
 
 export interface IField {
   width: number;

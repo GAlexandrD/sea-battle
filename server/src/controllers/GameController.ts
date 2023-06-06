@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { gameService } from '../services/GameService.js';
-import { clients } from '../ws-server.js';
-import { sessionService } from '../services/SessionService.js';
+import { gameService } from '../services/GameService';
+import { clients } from '../ws-server';
+import { sessionService } from '../services/SessionService';
 
 class GameController {
   async shoot(req: Request, res: Response) {

@@ -1,10 +1,10 @@
-import { shootRes } from '../logic/Game.js';
-import DeckModel from '../models/Deck.js';
-import FieldModel from '../models/Field.js';
-import PlayerModel from '../models/Player.js';
-import ShipModel from '../models/Ship.js';
-import { IField } from '../types/IField.js';
-import { IDeck, IShip } from '../types/IShip.js';
+import { shootRes } from '../logic/Game';
+import DeckModel from '../models/Deck';
+import FieldModel from '../models/Field';
+import PlayerModel from '../models/Player';
+import ShipModel from '../models/Ship';
+import { IField } from '../types/IField';
+import { IDeck, IShip } from '../types/IShip';
 
 class FieldService {
   async addField(playerId: number, field: IField) {
