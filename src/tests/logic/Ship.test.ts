@@ -1,5 +1,5 @@
 import { IDeck } from '../../types/IShip';
-import { Ship } from '../Ship';
+import { Ship } from '../../logic/Ship';
 
 test('Ship test', () => {
   const ship = new Ship(1, 1, [

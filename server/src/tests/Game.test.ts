@@ -1,6 +1,6 @@
-import { IField } from '../src/types/IField';
-import { IShip } from '../src/types/IShip';
-import { game, shootRes } from '../src/logic/Game';
+import { IField } from '../types/IField';
+import { IShip } from '../types/IShip';
+import { game, shootRes } from '../logic/Game';
 
 test('server game logic', () => {
   const ship1: IShip = {
