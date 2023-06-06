@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { sessionController } from '../controllers/SessionController.js';
-import { gameController } from '../controllers/GameController.js';
+import { sessionController } from '../controllers/SessionController';
+import { gameController } from '../controllers/GameController';
 
 const router = Router();
 

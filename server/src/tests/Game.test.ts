@@ -1,6 +1,8 @@
 import { IField } from '../types/IField';
 import { IShip } from '../types/IShip';
-import { game, shootRes } from './Game';
+import { GameRules, shootRes } from '../services/GameRules'
+ 
+const game = new GameRules()
 
 test('server game logic', () => {
   const ship1: IShip = {

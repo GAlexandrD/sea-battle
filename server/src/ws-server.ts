@@ -1,8 +1,8 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import PlayerModel from './models/Player.js';
-import { sessionService } from './services/SessionService.js';
-import dotenv from 'dotenv';
-dotenv.config()
+import PlayerModel from './models/Player';
+import { config } from 'dotenv';
+import { sessionService } from './singleton';
+config()
 
 interface Client {
   userId: number;
@@ -46,7 +46,7 @@ export const startWSS = () => {
           if (wsPlayer2) {
             wsPlayer2.ws.send(JSON.stringify({ event: 'session-closed' }));
           }
-          session.destroy();
+          await sessionService.deleteSession(player.id)
         }
         player.destroy();
       });

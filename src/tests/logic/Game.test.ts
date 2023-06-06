@@ -1,5 +1,5 @@
-import { Ship } from '../Ship';
-import { SeaBattle } from '../Game';
+import { Ship } from '../../logic/Ship';
+import { SeaBattle } from '../../logic/Game';
 
 test('Field test', () => {
   const game = new SeaBattle();

@@ -1,8 +1,8 @@
-import DeckModel from './Deck.js';
-import FieldModel from './Field.js';
-import PlayerModel from './Player.js';
-import SessionModel from './Session.js';
-import ShipModel from './Ship.js';
+import DeckModel from './Deck';
+import FieldModel from './Field';
+import PlayerModel from './Player';
+import SessionModel from './Session';
+import ShipModel from './Ship';
 
 export const assosiate = () => {
   FieldModel.hasMany(ShipModel, {

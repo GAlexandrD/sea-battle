@@ -1,5 +1,5 @@
-import { Ship } from '../Ship';
-import { Field } from '../Field';
+import { Ship } from '../../logic/Ship';
+import { Field } from '../../logic/Field';
 
 test('Field test', () => {
   const field = new Field(10, 10);
