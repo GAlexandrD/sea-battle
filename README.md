@@ -1,6 +1,6 @@
 # Sea Battle
 
-This web application is well known game sea battle. It was written on TypeScript using React on front-end and Nest.js on back-end. <br>
+This web application is well known game sea battle. It was written in TypeScript using React on front-end and Nest.js on back-end. <br>
 
 # Requirements
 
