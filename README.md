@@ -1,16 +1,23 @@
 # Sea Battle
 
-This web application is well known game sea battle. It was written on TypeScript using React on front-end and express on back-end. <br>
+This web application is well known game sea battle. It was written on TypeScript using React on front-end and Nest.js on back-end. <br>
 
 # Requirements
 
-[Node.JS](https://nodejs.org/en/download).<br>
-[Docker](https://docs.docker.com/get-docker/)
+[Node.JS](https://nodejs.org/en/download).
 
 ## How to run
 
-Docker compose is already configured in the project, so to run app you just need execute command:
+Install dependencies
 ```
-docker-compose up
+npm i
 ```
-Then open [http://localhost:3000](http://localhost:3000) to view it in browser.
+
+Run application
+```
+npm start
+```
+
+App will be available at [http://localhost:3000](http://localhost:3000)
+ 
+
