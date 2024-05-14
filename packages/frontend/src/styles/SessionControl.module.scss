@@ -1,0 +1,93 @@
+@import './global-vars.scss';
+
+.container {
+  display: flex;
+  width: 320px;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.session{ 
+  height: 50px;
+}
+
+.session_text {
+  color: $fieldColor;
+}
+
+.session_text_start {
+  color: $fieldColor;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.session_text_win{
+  font-size: 46px;
+  font-weight: 600;
+  color: green;
+}
+.session_text_lose{
+  font-size: 46px;
+  font-weight: 600;
+  color: red;
+}
+
+.session_code {
+  color: #9F2B68;
+}
+
+.session_input {
+  padding: 5px 10px;
+  border: $fieldColor solid 2px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: none;
+  color: #9F2B68;
+  width: 300px;
+}
+
+.session_input:focus {
+  outline: none;
+}
+
+.session_input::placeholder { 
+  color: $fieldColor;
+  opacity: 0.3;
+}
+
+.button {
+  color: white;
+  background-color: $fieldColor;
+  border-radius: 5px;
+  width: 150px;
+  font-size: 14px;
+  border: none;
+  padding: 5px 10px;
+}
+
+.button:hover {
+  transition: background-color 0.15s;
+  background: none;
+  color: $fieldColor;
+  outline: $fieldColor 1px solid;
+}
+
+.button_return {
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: blue;
+}
+
+.button_return:hover {
+  color: rgb(111, 111, 237);
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}

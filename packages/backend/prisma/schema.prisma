@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model decks {
+  id        Int      @id @default(autoincrement())
+  x         Int?
+  y         Int?
+  isDamaged Boolean?
+  shipId    Int?
+  ships     ships?   @relation("decks_ship", fields: [shipId], references: [id], onDelete: Cascade)
+}
+
+model fields {
+  id       Int      @id @default(autoincrement())
+  height   Int?
+  width    Int?
+  playerId Int?
+  players  players? @relation("fields_player", fields: [playerId], references: [id], onDelete: Cascade)
+  ships    ships[]  @relation("ships_field")
+}
+
+model players {
+  id                        Int        @id @default(autoincrement())
+  socketId                  String?
+  fields                    fields[]   @relation("fields_player")
+  sessions_sessions_player1 sessions[] @relation("sessions_player1")
+  sessions_sessions_player2 sessions[] @relation("sessions_player2")
+}
+
+model sessions {
+  id                       String   @id @db.VarChar(255)
+  movingSide               Boolean?
+  player1                  Int?
+  player2                  Int?
+  players_sessions_player1 players? @relation("sessions_player1", fields: [player1], references: [id])
+  players_sessions_player2 players? @relation("sessions_player2", fields: [player2], references: [id])
+}
+
+model ships {
+  id          Int      @id @default(autoincrement())
+  x           Int?
+  y           Int?
+  isDestroyed Boolean?
+  fieldId     Int?
+  decks       decks[]  @relation("decks_ship")
+  fields      fields?  @relation("ships_field", fields: [fieldId], references: [id], onDelete: Cascade)
+}

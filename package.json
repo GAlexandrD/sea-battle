@@ -1,0 +1,21 @@
+{
+  "name": "sea-battle-nest",
+  "version": "1.0.0",
+  "description": "This web application is well known game sea battle. It was written on TypeScript using React on front-end and express on back-end. <br>",
+  "main": "index.js",
+  "scripts": {
+    "frontend:dev": "npm start --workspace=packages/frontend",
+    "backend:dev": "npm run start:dev --workspace=packages/backend",
+    "start": "concurrently --kill-others \"npm run frontend:dev\" \"npm run backend:dev\""
+  },
+  "workspaces": [
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
